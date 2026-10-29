@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/inventories")
 public class InventoryController {
 
     private final InventoryService inventoryService;
@@ -17,13 +17,18 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    @GetMapping("/inventory/events")
+    @GetMapping("/events")
     public List<EventInventoryResponse> inventoryGetAllEvents() {
         return inventoryService.getAllEvents();
     }
 
-    @GetMapping("/inventory/venue/{venueId}")
+    @GetMapping("/venues/{venueId}")
     public VenueInventoryResponse inventoryByVenueId(@PathVariable("venueId") Long venueId) {
         return inventoryService.getVenueInformation(venueId);
+    }
+
+    @GetMapping("/events/{eventId}")
+    public EventInventoryResponse inventoryForEvent(@PathVariable Long eventId) {
+        return inventoryService.getEventInventory(eventId);
     }
 }
