@@ -3,6 +3,7 @@ package com.dev.larry.inventoryservice.controller;
 import com.dev.larry.inventoryservice.response.EventInventoryResponse;
 import com.dev.larry.inventoryservice.response.VenueInventoryResponse;
 import com.dev.larry.inventoryservice.service.InventoryService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,5 +31,13 @@ public class InventoryController {
     @GetMapping("/events/{eventId}")
     public EventInventoryResponse inventoryForEvent(@PathVariable Long eventId) {
         return inventoryService.getEventInventory(eventId);
+    }
+
+    @PutMapping("/events/{eventId}/capacity/{capacity}")
+    public ResponseEntity<Void> updateEventCapacity(@PathVariable("eventId") Long eventId,
+                                                    @PathVariable("capacity") Long ticketsBooked) {
+        inventoryService.updateEventCapacity(eventId, ticketsBooked);
+
+        return ResponseEntity.ok().build();
     }
 }
